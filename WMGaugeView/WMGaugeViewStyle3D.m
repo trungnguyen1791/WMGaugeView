@@ -91,28 +91,40 @@
 - (void)drawFaceWithContext:(CGContextRef)context inRect:(CGRect)rect
 {
     // Default Face
-    NSAssert(_faceGradientPositions.count == _faceGradientColors.count, @"Must have same amout of colors as positions");
+//     NSAssert(_faceGradientPositions.count == _faceGradientColors.count, @"Must have same amout of colors as positions");
+//     CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
+//     CGFloat* positions = CGFloatCArray(_faceGradientPositions);
+//     CGGradientRef gradient = CGGradientCreateWithColors(baseSpace, (CFArrayRef)CGColorArray(_faceGradientColors), positions);
+//     CGColorSpaceRelease(baseSpace), baseSpace = NULL;
+//     CGContextAddEllipseInRect(context, rect);
+//     CGContextClip(context);
+//     CGContextDrawRadialGradient(context, gradient, kCenterPoint, 0, kCenterPoint, rect.size.width / 2.0, kCGGradientDrawsAfterEndLocation);
+//     CGGradientRelease(gradient), gradient = NULL;
+//     free(positions); positions = NULL;
+    
     CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
-    CGFloat* positions = CGFloatCArray(_faceGradientPositions);
-    CGGradientRef gradient = CGGradientCreateWithColors(baseSpace, (CFArrayRef)CGColorArray(_faceGradientColors), positions);
-    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
-    CGContextAddEllipseInRect(context, rect);
+    CGGradientRef gradient = CGGradientCreateWithColors(baseSpace, (CFArrayRef)@[ iCGRGB(249, 249, 249), iCGRGB(230, 230, 230)], NULL);
+    CGColorSpaceRelease(baseSpace);
+    baseSpace = NULL;
+    CGContextAddEllipseInRect(context, faceRect);
     CGContextClip(context);
-    CGContextDrawRadialGradient(context, gradient, kCenterPoint, 0, kCenterPoint, rect.size.width / 2.0, kCGGradientDrawsAfterEndLocation);
-    CGGradientRelease(gradient), gradient = NULL;
-    free(positions); positions = NULL;
+
+    CGContextDrawRadialGradient(context, gradient, center, 0, center, faceRect.size.width / 2.0, kCGGradientDrawsAfterEndLocation);
+
+    CGGradientRelease(gradient);
+    gradient = NULL;
     
     // Shadow
-    NSAssert(_faceShadowPositions.count == _faceShadowColors.count, @"Must have same amount of colors as positions");
-    baseSpace = CGColorSpaceCreateDeviceRGB();
-    positions = CGFloatCArray(_faceShadowPositions);
-    gradient = CGGradientCreateWithColors(baseSpace, (CFArrayRef)CGColorArray(_faceShadowColors), positions);
-    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
-    CGContextAddEllipseInRect(context, rect);
-    CGContextClip(context);
-    CGContextDrawRadialGradient(context, gradient, kCenterPoint, 0, kCenterPoint, rect.size.width / 2.0, kCGGradientDrawsAfterEndLocation);
-    CGGradientRelease(gradient), gradient = NULL;
-    free(positions); positions = NULL;
+//     NSAssert(_faceShadowPositions.count == _faceShadowColors.count, @"Must have same amount of colors as positions");
+//     baseSpace = CGColorSpaceCreateDeviceRGB();
+//     positions = CGFloatCArray(_faceShadowPositions);
+//     gradient = CGGradientCreateWithColors(baseSpace, (CFArrayRef)CGColorArray(_faceShadowColors), positions);
+//     CGColorSpaceRelease(baseSpace), baseSpace = NULL;
+//     CGContextAddEllipseInRect(context, rect);
+//     CGContextClip(context);
+//     CGContextDrawRadialGradient(context, gradient, kCenterPoint, 0, kCenterPoint, rect.size.width / 2.0, kCGGradientDrawsAfterEndLocation);
+//     CGGradientRelease(gradient), gradient = NULL;
+//     free(positions); positions = NULL;
     
     // Border
     CGContextSetLineWidth(context, _borderWidth);
